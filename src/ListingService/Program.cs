@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.RegisterMSSql();
+builder.RegisterHandlers();
 
 var app = builder.Build();
 
