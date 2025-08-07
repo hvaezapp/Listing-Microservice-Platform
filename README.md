@@ -1,2 +1,2 @@
 # Listing-Microservice-Platform
-A backend platform for classified ad listings built with microservices architecture
+Listing Microservice Platform is a scalable backend system for managing classified ad listings.
