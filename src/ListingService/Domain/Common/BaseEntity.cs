@@ -1,0 +1,8 @@
+﻿namespace ListingService.Domain.Common;
+
+public class BaseEntity<T>
+{
+    public T Id { get;  private set; }
+
+}
+public abstract class BaseDomainEntity : BaseEntity<Guid> { }
