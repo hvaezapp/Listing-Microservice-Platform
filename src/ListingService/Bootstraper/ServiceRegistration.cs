@@ -1,4 +1,5 @@
-﻿using ListingService.Infrastructure.Persistence.Context;
+﻿using ListingService.Handlers;
+using ListingService.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -13,6 +14,12 @@ public static class DependencyRegistration
         {
             configure.UseSqlServer(builder.Configuration.GetConnectionString(ListingDBContext.DefaultConnectionStringName));
         });
+    }
+
+
+    public static void RegisterHandlers(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<ListingHandler>();
     }
 
 }

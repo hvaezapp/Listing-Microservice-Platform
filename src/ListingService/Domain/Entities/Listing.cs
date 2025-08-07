@@ -1,6 +1,7 @@
 ﻿using ListingService.Domain.Common;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using ListingService.Shared;
 
 namespace ListingService.Domain.Entities;
 
@@ -8,6 +9,7 @@ public class Listing : BaseDomainEntity
 {
     public const string TableName = "Listings";
 
+    #region props
     public Guid UserId { get; private set; }
     public Guid CategoryId { get; private set; }
     public Category Category { get; private set; } = null!;
@@ -15,6 +17,24 @@ public class Listing : BaseDomainEntity
     public string Slug { get; private set; } = null!;
     public string Description { get; private set; } = null!;
     public string ImageUrl { get; private set; } = null!;
+    #endregion
+
+
+    #region methods
+    internal static Listing Create(Guid userId, Guid categoryId, string title,
+                                   string description, string imageUrl)
+    {
+        return new Listing
+        {
+            UserId = userId,
+            CategoryId = categoryId,
+            Title = title,
+            Slug = title.GenerateSlug(),
+            Description = description,
+            ImageUrl = imageUrl
+        };
+    }
+    #endregion
 
 }
 
