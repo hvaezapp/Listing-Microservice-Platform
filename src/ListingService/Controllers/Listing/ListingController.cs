@@ -2,7 +2,7 @@
 using ListingService.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ListingService.Controllers.Listing.Endpoints
+namespace ListingService.Controllers.Listing
 {
     [Route("api/[controller]")]
     [ApiController]
