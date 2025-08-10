@@ -1,4 +1,4 @@
-﻿using IdentityService.Services;
+﻿using IdentityService.Handlers;
 using IdentityService.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,8 +11,8 @@ public static class DependencyRegistration
     public static void RegisterJWT(this WebApplicationBuilder builder)
     {
         var jwtSetting = builder.Configuration.GetSection(JwtSetting.Name).Get<JwtSetting>();
-        if(jwtSetting is null)
-            throw new ArgumentNullException(nameof(jwtSetting) , "jwtSetting not found!");
+        if (jwtSetting is null)
+            throw new ArgumentNullException(nameof(jwtSetting), "jwtSetting not found!");
 
         builder.Services.AddAuthentication(Options =>
         {
@@ -21,11 +21,13 @@ public static class DependencyRegistration
             Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
         })
-                        .AddJwtBearer(configureOptions =>
+        .AddJwtBearer(configureOptions =>
         {
             configureOptions.TokenValidationParameters = new TokenValidationParameters()
             {
                 ValidateIssuerSigningKey = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidIssuer = jwtSetting.Issuer,
                 ValidAudience = jwtSetting.Audience,
@@ -39,7 +41,7 @@ public static class DependencyRegistration
     }
 
 
-    public static void RegisterServices(this WebApplicationBuilder builder)
+    public static void RegisterHandlers(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<UserTokenHandler>();
     }

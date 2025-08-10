@@ -21,15 +21,14 @@ public class UserTokenHandler(IOptions<JwtSetting> jwtSetting)
         // get claim from user claims dynamically
         var claims = new[]
         {
-              new Claim(ClaimTypes.Sid, "1"),
+              new Claim(ClaimTypes.Sid, Guid.NewGuid().ToString()),
               new Claim(ClaimTypes.NameIdentifier , "hwpro")
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-
-        var expire = DateTime.UtcNow.AddHours(1);
+        var expire = DateTime.Now.AddHours(1);
 
         var jwtSecurityToken = new JwtSecurityToken(
 
@@ -42,7 +41,7 @@ public class UserTokenHandler(IOptions<JwtSetting> jwtSetting)
         );
 
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        return new TokenResponseDto(token, expire.Minute, expire);
+        return new TokenResponseDto(token, (int)Math.Ceiling((expire - DateTime.Now).TotalMinutes), expire);
 
     }
 }
