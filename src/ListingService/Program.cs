@@ -1,24 +1,28 @@
 using ListingService.Bootstraper;
-using ListingService.Middleware;
+using ListingService.Shared;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-
+builder.RegisterCommon();
 builder.RegisterMSSql();
 builder.RegisterHandlers();
+builder.RegisterJWT();
 
 var app = builder.Build();
 
-app.UseMiddleware<BusinessIdMiddleware>();
+app.UseBusinessIdMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
