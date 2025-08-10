@@ -1,5 +1,6 @@
 ﻿using ListingService.Controllers.Listing.Dtos;
 using ListingService.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ListingService.Controllers.Listing
@@ -10,6 +11,7 @@ namespace ListingService.Controllers.Listing
     {
         private readonly ListingHandler _listingHandler = listingHandler;
 
+        [Authorize]
         [HttpPost("[action]")]
         public async Task<IActionResult> Create(CreateListingRequestDto dto, CancellationToken cancellationToken)
         {

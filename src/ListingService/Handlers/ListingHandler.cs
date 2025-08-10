@@ -7,18 +7,20 @@ namespace ListingService.Handlers;
 public class ListingHandler
 {
     private readonly ListingDBContext _listingDBContext;
-    public ListingHandler(ListingDBContext listingDBContext)
+    private readonly CurrentUserHandler _currentUserHandler;
+
+    public ListingHandler(ListingDBContext listingDBContext, CurrentUserHandler currentUserHandler)
     {
         _listingDBContext = listingDBContext;
+        _currentUserHandler = currentUserHandler;
     }
 
-    public async Task Create(CreateListingRequestDto dto , CancellationToken cancellationToken)
+    public async Task Create(CreateListingRequestDto dto, CancellationToken cancellationToken)
     {
         // check validation
         // check slug duplication
 
-        var newListing = Listing.Create(Guid.NewGuid(),
-            dto.categoryId,
+        var newListing = Listing.Create(_currentUserHandler.UserId, dto.categoryId,
             dto.title,
             dto.description,
             dto.imageUrl
