@@ -3,11 +3,22 @@ using Shared.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using IdentityService.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Bootstraper;
 
 public static class DependencyRegistration
 {
+    public static void RegisterMSSql(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<IdentityDBContext>(configure =>
+        {
+            object value = configure.UseSqlServer(builder.Configuration.GetConnectionString(IdentityDBContext.DefaultConnectionStringName));
+        });
+    }
+
+
     public static void RegisterJWT(this WebApplicationBuilder builder)
     {
         var jwtSetting = builder.Configuration.GetSection(JwtSetting.Name).Get<JwtSetting>();
@@ -39,8 +50,6 @@ public static class DependencyRegistration
 
         builder.Services.AddAuthorization();
     }
-
-
     public static void RegisterHandlers(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<UserTokenHandler>();

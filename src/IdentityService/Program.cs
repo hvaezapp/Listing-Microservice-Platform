@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // option pattern for JwtSetting
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection(JwtSetting.Name));
 
+builder.RegisterMSSql();
 builder.RegisterJWT();
 builder.RegisterHandlers();
 
