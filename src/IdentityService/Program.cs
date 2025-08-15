@@ -1,6 +1,6 @@
 ﻿using IdentityService.Bootstraper;
 using IdentityService.Handlers;
-using IdentityService.Shared;
+using Shared.Auth;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

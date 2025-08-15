@@ -1,7 +1,7 @@
-﻿using ListingService.Domain.Common;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using ListingService.Shared;
 using Microsoft.EntityFrameworkCore;
-using ListingService.Shared;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Shared.Domain;
 
 namespace ListingService.Domain.Entities;
 

@@ -1,4 +1,4 @@
-﻿namespace ListingService.Shared;
+﻿namespace Shared.Auth;
 
 public class JwtSetting
 {

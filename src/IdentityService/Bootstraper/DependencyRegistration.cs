@@ -1,5 +1,5 @@
 ﻿using IdentityService.Handlers;
-using IdentityService.Shared;
+using Shared.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

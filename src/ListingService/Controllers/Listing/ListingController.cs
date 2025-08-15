@@ -11,6 +11,14 @@ namespace ListingService.Controllers.Listing
     {
         private readonly ListingHandler _listingHandler = listingHandler;
 
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        {
+            return Ok(await _listingHandler.GetAll(cancellationToken));
+        }
+
+
         [Authorize]
         [HttpPost("[action]")]
         public async Task<IActionResult> Create(CreateListingRequestDto dto, CancellationToken cancellationToken)
@@ -18,5 +26,8 @@ namespace ListingService.Controllers.Listing
             await _listingHandler.Create(dto, cancellationToken);
             return Ok();
         }
+
+
+
     }
 }

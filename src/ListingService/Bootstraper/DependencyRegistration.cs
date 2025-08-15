@@ -1,6 +1,6 @@
 ﻿using ListingService.Handlers;
 using ListingService.Infrastructure.Persistence.Context;
-using ListingService.Shared;
+using Shared.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

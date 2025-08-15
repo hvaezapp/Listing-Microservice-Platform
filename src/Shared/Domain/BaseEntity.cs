@@ -1,4 +1,4 @@
-﻿namespace ListingService.Domain.Common;
+﻿namespace Shared.Domain;
 
 public class BaseEntity<T>
 {

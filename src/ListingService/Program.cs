@@ -10,9 +10,11 @@ builder.RegisterMSSql();
 builder.RegisterHandlers();
 builder.RegisterJWT();
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
-app.UseBusinessIdMiddleware();
+//app.UseBusinessIdMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
