@@ -1,18 +1,17 @@
 ﻿using IdentityService.Bootstraper;
-using IdentityService.Handlers;
-using Shared.Auth;
+using IdentityService.Endpoints;
 using Scalar.AspNetCore;
+using Shared.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // option pattern for JwtSetting
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection(JwtSetting.Name));
 
+builder.RegisterCommon();
 builder.RegisterMSSql();
 builder.RegisterJWT();
 builder.RegisterHandlers();
-
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -26,14 +25,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/token", (UserTokenHandler userTokenHandler) =>
-{
-    //in other service :
-        // validaition
-        // check username and password
 
-    return Results.Ok(userTokenHandler.GenerateToken());
-});
+app.MapAuthEndpoints();
 
 
 app.Run();

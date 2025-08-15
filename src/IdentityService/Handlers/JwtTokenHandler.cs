@@ -1,4 +1,5 @@
-﻿using IdentityService.Dtos.Token;
+﻿using IdentityService.Domain.Entities;
+using IdentityService.Dtos.Token;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Auth;
@@ -8,22 +9,15 @@ using System.Text;
 
 namespace IdentityService.Handlers;
 
-public class UserTokenHandler(IOptions<JwtSetting> jwtSetting)
+public class JwtTokenHandler(IOptions<JwtSetting> jwtSetting)
 {
     private readonly IOptions<JwtSetting> _jwtSetting = jwtSetting;
 
-    public TokenResponseDto GenerateToken()
+    public JwtTokenResponceDto GenerateToken(Claim[] claims)
     {
         var jwtSetting = _jwtSetting.Value;
         if (jwtSetting is null)
             throw new ArgumentNullException(nameof(jwtSetting), "jwtSetting not found!");
-
-        // get claim from user claims dynamically
-        var claims = new[]
-        {
-              new Claim(ClaimTypes.Sid, Guid.NewGuid().ToString()),
-              new Claim(ClaimTypes.NameIdentifier , "hwpro")
-        };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -41,7 +35,7 @@ public class UserTokenHandler(IOptions<JwtSetting> jwtSetting)
         );
 
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        return new TokenResponseDto(token, (int)Math.Ceiling((expire - DateTime.Now).TotalMinutes), expire);
+        return new JwtTokenResponceDto(token, (int)Math.Ceiling((expire - DateTime.Now).TotalMinutes), expire);
 
     }
 }

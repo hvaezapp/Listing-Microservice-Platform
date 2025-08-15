@@ -1,15 +1,22 @@
 ﻿using IdentityService.Handlers;
-using Shared.Auth;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using IdentityService.Infrastructure.Persistence.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Shared.Auth;
+using System.Text;
 
 namespace IdentityService.Bootstraper;
 
 public static class DependencyRegistration
 {
+
+    public static void RegisterCommon(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers();
+        builder.Services.AddOpenApi();
+    }
+
     public static void RegisterMSSql(this WebApplicationBuilder builder)
     {
         builder.Services.AddDbContext<IdentityDBContext>(configure =>
@@ -47,11 +54,11 @@ public static class DependencyRegistration
 
         });
 
-
         builder.Services.AddAuthorization();
     }
     public static void RegisterHandlers(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<UserTokenHandler>();
+        builder.Services.AddScoped<AuthHandler>();
+        builder.Services.AddScoped<JwtTokenHandler>();
     }
 }

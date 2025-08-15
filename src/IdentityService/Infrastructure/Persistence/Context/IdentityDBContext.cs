@@ -10,7 +10,7 @@ public class IdentityDBContext(DbContextOptions dbContextOptions) : DbContext(db
     private const string DefaultSchema = "identity";
     public const string DefaultConnectionStringName = "SvcDbContext";
 
-    public DbSet<User> Listings => Set<User>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
