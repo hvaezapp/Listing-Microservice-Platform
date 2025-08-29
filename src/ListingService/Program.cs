@@ -9,6 +9,7 @@ builder.RegisterCommon();
 builder.RegisterMSSql();
 builder.RegisterHandlers();
 builder.RegisterJWT();
+builder.RegisterBroker();
 
 builder.Services.AddHttpContextAccessor();
 

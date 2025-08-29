@@ -38,8 +38,7 @@ public class ListingHandler
         var newListing = Listing.Create(_currentUserHandler.UserId, 
             dto.categoryId,
             dto.title,
-            dto.description,
-            dto.imageUrl
+            dto.description
         );
 
         _listingDBContext.Add(newListing);

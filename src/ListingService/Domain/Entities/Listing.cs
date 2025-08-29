@@ -20,8 +20,7 @@ public class Listing : BaseDomainEntity
 
 
     #region methods
-    internal static Listing Create(Guid userId, Guid categoryId, string title,
-                                   string description, string imageUrl)
+    internal static Listing Create(Guid userId, Guid categoryId, string title, string description)
     {
         return new Listing
         {
@@ -30,7 +29,6 @@ public class Listing : BaseDomainEntity
             Title = title,
             Slug = title.GenerateSlug(),
             Description = description,
-            ImageUrl = imageUrl
         };
     }
     #endregion

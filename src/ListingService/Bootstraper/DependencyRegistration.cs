@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MassTransit;
+using ListingService.Shared;
 
 namespace ListingService.Bootstraper;
 
@@ -31,7 +33,6 @@ public static class DependencyRegistration
         builder.Services.AddScoped<ListingHandler>();
         builder.Services.AddScoped<CurrentUserHandler>();
     }
-
 
     public static void RegisterJWT(this WebApplicationBuilder builder)
     {
@@ -62,6 +63,30 @@ public static class DependencyRegistration
         });
 
         builder.Services.AddAuthorization();
+    }
+
+
+    public static void RegisterBroker(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMassTransit(configure =>
+        {
+            var brokerConfig = builder.Configuration
+                                        .GetSection(BrokerSetting.SectionName)
+                                        .Get<BrokerSetting>();
+            if (brokerConfig is null)
+                throw new ArgumentNullException(nameof(BrokerSetting), "Broker setting not found");
+
+            configure.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(brokerConfig.Host, hostConfigure =>
+                {
+                    hostConfigure.Username(brokerConfig.Username);
+                    hostConfigure.Password(brokerConfig.Password);
+                });
+
+                cfg.ConfigureEndpoints(context);
+            });
+        });
     }
 
 
