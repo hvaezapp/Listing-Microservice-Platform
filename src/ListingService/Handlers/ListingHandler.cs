@@ -58,9 +58,14 @@ public class ListingHandler
 
         // raise event for search service to create index
         await _publishEndpoint.Publish(new ListingItemAddedEvent(
-                loadListingItem.Category.Title,
-                loadListingItem.Description,
-                loadListingItem.Slug
+
+                    loadListingItem.Id,
+                    loadListingItem.Title,
+                    loadListingItem.Description,
+                    loadListingItem.Slug,
+                    loadListingItem.Category.Title,
+                    loadListingItem.ImageUrl
+
               ));
     }
 }
