@@ -25,9 +25,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapAuthEndpoints();
-
 
 app.Run();
 

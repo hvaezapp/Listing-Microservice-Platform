@@ -1,14 +1,12 @@
-using SearchService;
 using SearchService.Bootstraper;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.RegisterCommon();
 builder.RegisterBroker();
 builder.RegisterElasticSearch();
-
-builder.Services.Configure<AppSettings>(builder.Configuration);
-
-builder.Services.AddOpenApi();
+builder.RegisterAppSettings();
 
 var app = builder.Build();
 
@@ -16,6 +14,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.Run();

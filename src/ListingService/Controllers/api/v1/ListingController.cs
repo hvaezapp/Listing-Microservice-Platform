@@ -1,11 +1,11 @@
-﻿using ListingService.Controllers.Listing.Dtos;
+﻿using ListingService.Dtos;
 using ListingService.Handlers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ListingService.Controllers.Listing
+namespace ListingService.Controllers.api.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ListingController(ListingHandler listingHandler) : ControllerBase
     {

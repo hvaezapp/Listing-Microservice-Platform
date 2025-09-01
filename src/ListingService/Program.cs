@@ -1,5 +1,4 @@
 using ListingService.Bootstraper;
-using ListingService.Shared;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -35,11 +35,14 @@ public static class DependencyRegistration
 
     }
 
-    public static void RegisterElasticSearch(this IHostApplicationBuilder builder)
+    public static void RegisterElasticSearch(this WebApplicationBuilder builder)
     {
         builder.Services.AddScoped(sp =>
         {
             var elasticSettings = sp.GetRequiredService<IOptions<AppSettings>>().Value.ElasticSearchOptions;
+
+            ArgumentNullException.ThrowIfNull(elasticSettings, nameof(ElasticSearchOptions));
+
             var settings = new ElasticsearchClientSettings(new Uri(elasticSettings.Host))
                                         .CertificateFingerprint(elasticSettings.Fingerprint)
                                         .Authentication(new BasicAuthentication(elasticSettings.UserName, elasticSettings.Password));
@@ -48,4 +51,16 @@ public static class DependencyRegistration
         });
     }
 
+
+    public static void RegisterAppSettings(this IHostApplicationBuilder builder)
+    {
+        builder.Services.Configure<AppSettings>(builder.Configuration);
+    }
+
+
+    public static void RegisterCommon(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers();
+        builder.Services.AddOpenApi();
+    }
 }

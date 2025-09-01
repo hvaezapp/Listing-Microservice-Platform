@@ -1,4 +1,4 @@
-﻿namespace ListingService.Controllers.Listing.Dtos;
+﻿namespace ListingService.Dtos;
 
 public sealed record GetListingResponseDto
 (

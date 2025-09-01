@@ -1,5 +1,5 @@
-﻿using ListingService.Controllers.Listing.Dtos;
-using ListingService.Domain.Entities;
+﻿using ListingService.Domain.Entities;
+using ListingService.Dtos;
 using ListingService.Infrastructure.IntegrationEvents;
 using ListingService.Infrastructure.Persistence.Context;
 using MassTransit;
