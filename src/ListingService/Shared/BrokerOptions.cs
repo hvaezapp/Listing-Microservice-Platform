@@ -1,8 +1,8 @@
 ﻿namespace ListingService.Shared;
 
-public sealed class BrokerSetting
+public sealed class BrokerOptions
 {
-    public const string SectionName = "BrokerSetting";
+    public const string SectionName = "BrokerOptions";
 
     public required string Host { get; set; }
     public required string Username { get; set; }

@@ -71,10 +71,10 @@ public static class DependencyRegistration
         builder.Services.AddMassTransit(configure =>
         {
             var brokerConfig = builder.Configuration
-                                        .GetSection(BrokerSetting.SectionName)
-                                        .Get<BrokerSetting>();
+                                        .GetSection(BrokerOptions.SectionName)
+                                        .Get<BrokerOptions>();
             if (brokerConfig is null)
-                throw new ArgumentNullException(nameof(BrokerSetting), "Broker setting not found");
+                throw new ArgumentNullException(nameof(BrokerOptions), "Broker setting not found");
 
             configure.UsingRabbitMq((context, cfg) =>
             {

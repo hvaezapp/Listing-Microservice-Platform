@@ -54,12 +54,13 @@ public class ListingHandler
         var loadListingItem = await _listingDBContext.Listings
                                                  .Include(l => l.Category)
                                                  .FirstAsync(l => l.Slug == newListing.Slug,
-                                                  cancellationToken);
+                                                 cancellationToken);
 
         // raise event for search service to create index
         await _publishEndpoint.Publish(new ListingItemAddedEvent(
                 loadListingItem.Category.Title,
-                loadListingItem.Description
+                loadListingItem.Description,
+                loadListingItem.Slug
               ));
     }
 }
